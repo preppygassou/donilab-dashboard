@@ -1,0 +1,12 @@
+{
+  "/(protected)/site/[siteId]/hubs/page": "app/(protected)/site/[siteId]/hubs/page.js",
+  "/(protected)/site/[siteId]/reports/page": "app/(protected)/site/[siteId]/reports/page.js",
+  "/(protected)/site/[siteId]/teams/page": "app/(protected)/site/[siteId]/teams/page.js",
+  "/(protected)/(dashboard)/users/page": "app/(protected)/(dashboard)/users/page.js",
+  "/(protected)/(dashboard)/permissions/page": "app/(protected)/(dashboard)/permissions/page.js",
+  "/(protected)/(dashboard)/partners/page": "app/(protected)/(dashboard)/partners/page.js",
+  "/(protected)/(dashboard)/tags/page": "app/(protected)/(dashboard)/tags/page.js",
+  "/(protected)/(dashboard)/categories/page": "app/(protected)/(dashboard)/categories/page.js",
+  "/(protected)/(dashboard)/sites/page": "app/(protected)/(dashboard)/sites/page.js",
+  "/(protected)/(dashboard)/dashboard/page": "app/(protected)/(dashboard)/dashboard/page.js"
+}

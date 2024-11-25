@@ -1,0 +1,110 @@
+{
+  "pages": {
+    "/error": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/error.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/(protected)/(dashboard)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/(dashboard)/layout.js"
+    ],
+    "/not-found": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/not-found.js"
+    ],
+    "/(protected)/(dashboard)/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/(dashboard)/dashboard/page.js"
+    ],
+    "/(protected)/(dashboard)/users/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/(dashboard)/users/page.js"
+    ],
+    "/(protected)/(dashboard)/sites/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/(dashboard)/sites/page.js"
+    ],
+    "/(protected)/(dashboard)/partners/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/(dashboard)/partners/page.js"
+    ],
+    "/(protected)/(dashboard)/tags/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/(dashboard)/tags/page.js"
+    ],
+    "/(protected)/(dashboard)/invitations/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/(dashboard)/invitations/page.js"
+    ],
+    "/(protected)/(dashboard)/permissions/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/(dashboard)/permissions/page.js"
+    ],
+    "/(protected)/(dashboard)/categories/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/(dashboard)/categories/page.js"
+    ],
+    "/auth/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/auth/login/page.js"
+    ],
+    "/(protected)/site/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/site/layout.js"
+    ],
+    "/(protected)/site/[siteId]/posts/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/site/[siteId]/posts/page.js"
+    ],
+    "/(protected)/site/[siteId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/site/[siteId]/page.js"
+    ],
+    "/(protected)/site/[siteId]/events/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/site/[siteId]/events/page.js"
+    ],
+    "/(protected)/site/[siteId]/teams/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/site/[siteId]/teams/page.js"
+    ],
+    "/(protected)/site/[siteId]/reports/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/site/[siteId]/reports/page.js"
+    ],
+    "/(protected)/site/[siteId]/programs/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/site/[siteId]/programs/page.js"
+    ],
+    "/(protected)/site/[siteId]/hubs/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(protected)/site/[siteId]/hubs/page.js"
+    ]
+  }
+}

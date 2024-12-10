@@ -8,10 +8,11 @@ interface Props {
   onSubmit: (data: any) => void;
   onCancel: () => void;
   hubs?: any[];
+  users?: any[];
   siteId:string;
 }
 
-export default function TeamForm({ initialData,hubs=[], siteId, onSubmit, onCancel }: Props) {
+export default function TeamForm({ initialData,hubs=[],users=[], siteId, onSubmit, onCancel }: Props) {
   const [name, setName] = useState(initialData?.name || '');
   const [profile, setProfile] = useState(initialData?.profile.url || '');
   const [poste, setPoste] = useState({
@@ -72,12 +73,22 @@ export default function TeamForm({ initialData,hubs=[], siteId, onSubmit, onCanc
           required
         />
       </div>
-      <TextInput
+      <Select
+        label="User"
+        value={userId}
+        onChange={setUserId}
+        options={users.map((user) => ({
+          value: user.id,
+          label: user.name,
+        }))}
+        required
+      />
+     {/*  <TextInput
         label="User ID"
         value={userId}
         onChange={setUserId}
         required
-      />
+      /> */}
       <div className="flex justify-end gap-3">
         <button
           type="button"

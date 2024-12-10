@@ -26,6 +26,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { useStore } from '@/contexts/store';
 import { logout } from '@/contexts/auth/actions';
+import Header from './layout/header';
 
 
 
@@ -41,19 +42,17 @@ export default function DashboardLayout({children }) {
   };
 
   const navigation = [
-  
-  
-    { name: 'Hubs', href:"/site/"+ params.siteId+ '/hubs', icon: BuildingOfficeIcon },
-    { name: 'Posts', href:"/site/"+ params.siteId+ '/posts', icon: NewspaperIcon },
-    { name: 'Events', href:"/site/"+ params.siteId+ '/events', icon: CalendarIcon },
-    /* { name: 'Partners', href:"/site/"+ params.siteId+ '/partners', icon: UserGroupIcon }, */
-    { name: 'Programs', href:"/site/"+ params.siteId+ '/programs', icon: ClipboardDocumentListIcon },
-    { name: 'Reports', href:"/site/"+ params.siteId+ '/reports', icon: DocumentTextIcon },
-    { name: 'Teams', href:"/site/"+ params.siteId+ '/teams', icon: UserCircleIcon },
-    /* { name: 'Permissions', href: '/permissions', icon: KeyIcon },
-    { name: 'Invitations', href: '/invitations', icon: EnvelopeIcon },
-    { name: 'Sidebar Options', href: '/sidebar-options', icon: ListBulletIcon },
-    { name: 'Settings', href: '/settings', icon: Cog6ToothIcon }, */
+    { name: 'Hubs', href: "/site/" + params.siteId + '/hubs', icon: HomeIcon },
+    { name: 'Posts', href: "/site/" + params.siteId + '/posts', icon: NewspaperIcon },
+    { name: 'Events', href: "/site/" + params.siteId + '/events', icon: CalendarIcon },
+    { name: 'Programs', href: "/site/" + params.siteId + '/programs', icon: ClipboardDocumentListIcon },
+    { name: 'Reports', href: "/site/" + params.siteId + '/reports', icon: DocumentTextIcon },
+    { name: 'Teams', href: "/site/" + params.siteId + '/teams', icon: UserGroupIcon },
+    { name: 'Media', href: "/site/" + params.siteId + '/media', icon: FolderIcon },
+    { name: 'Site Content', href: "/site/" + params.siteId + '/data', icon: ListBulletIcon },
+    { name: 'Site Expertise', href: "/site/" + params.siteId + '/expertise', icon: UsersIcon },
+    { name: 'Site Impact', href: "/site/" + params.siteId + '/impact', icon: TagIcon },
+    { name: 'Site Services', href: "/site/" + params.siteId + '/services', icon: Cog6ToothIcon },
   ];
 
   return (
@@ -221,6 +220,7 @@ export default function DashboardLayout({children }) {
 
         <div className="lg:pl-72">
           <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+         
             <button
               type="button"
               className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
@@ -236,13 +236,7 @@ export default function DashboardLayout({children }) {
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
               <div className="flex flex-1" />
               <div className="flex items-center gap-x-4 lg:gap-x-6">
-                <button
-                  type="button"
-                  className="text-sm font-semibold leading-6 text-gray-900 lg:hidden"
-                  onClick={logout}
-                >
-                  Sign out
-                </button>
+              <Header/>
               </div>
             </div>
           </div>

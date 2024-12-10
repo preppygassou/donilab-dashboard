@@ -691,15 +691,13 @@ const logout = () => async (dispatch: Dispatch<any>) =>{
 
 export const detailsUser = () => async (dispatch: Dispatch<any>) =>{
   try {
-    const { data } = await api.get(`/user/me`);
+    const { data } = await api.get(`/users/user`);
     const user = {
       id: "",
       name: "",
       email: "",
       phone: "",
-      role: {},
-      organizations: [],
-      permissions: [],
+      role: "",
     };
 
     user.id = data.id
@@ -707,8 +705,6 @@ export const detailsUser = () => async (dispatch: Dispatch<any>) =>{
     user.email = data.email
     user.phone = data.phone
     user.role = data.role
-    user.organizations = data.organizations
-    user.permissions = data.permissions
 
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 

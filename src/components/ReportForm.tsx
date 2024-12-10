@@ -16,8 +16,10 @@ export default function ReportForm({ initialData,siteId, onSubmit, onCancel }: P
   });
  
   const [featuredMedia, setFeaturedMedia] = useState({ 
-    en: initialData?.featured_media?.en || '', 
-    fr: initialData?.featured_media?.fr || '' 
+    url:{
+      en: initialData?.featured_media?.url?.en  || '', 
+      fr: initialData?.featured_media?.url?.fr  || '' 
+    }
   });
   const [year, setYear] = useState(initialData?.year || '');
   const [url, setUrl] = useState(initialData?.url || '');

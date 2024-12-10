@@ -26,6 +26,7 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCurrentUser } from '@/hooks/use-current-user';
+import Header from './layout/header';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
@@ -35,6 +36,8 @@ const navigation = [
 /*   { name: 'Posts', href: '/posts', icon: NewspaperIcon },
   { name: 'Events', href: '/events', icon: CalendarIcon }, */
   { name: 'Categories', href: '/categories', icon: FolderIcon },
+  { name: 'Program Types', href: '/program-types', icon: ListBulletIcon },
+  { name: 'Zones', href: '/zones', icon: BuildingOfficeIcon },
   { name: 'Tags', href: '/tags', icon: TagIcon },
   { name: 'Partners', href: '/partners', icon: UserGroupIcon },
   /* { name: 'Partners', href: '/partners', icon: UserGroupIcon },
@@ -89,8 +92,8 @@ export default function DashboardLayout({ children }) {
                     <div className="flex h-16 shrink-0 items-center">
                       <img
                         className="h-8 w-auto"
-                        src="/logo.svg"
-                        alt="Your Company"
+                        src="/logodonilab.png"
+                        alt="Donilab"
                       />
                     </div>
                     <nav className="flex flex-1 flex-col">
@@ -158,7 +161,7 @@ export default function DashboardLayout({ children }) {
               <img
                 className="h-8 w-auto"
                 src="/logodonilab.png"
-                alt="Your Company"
+                alt="Donilab"
               />
             </div>
             <nav className="flex flex-1 flex-col">
@@ -208,7 +211,7 @@ export default function DashboardLayout({ children }) {
                     </div>
                     <span className="flex-1">{user?.name}</span>
                     <button
-                      onClick={logout}
+                      onClick={onClick}
                       className="text-sm font-medium text-gray-500 hover:text-gray-700"
                     >
                       Sign out
@@ -237,13 +240,14 @@ export default function DashboardLayout({ children }) {
             <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
               <div className="flex flex-1" />
               <div className="flex items-center gap-x-4 lg:gap-x-6">
-                <button
+                <Header/>
+                {/* <button
                   type="button"
                   className="text-sm font-semibold leading-6 text-gray-900 lg:hidden"
                   onClick={onClick}
                 >
                   Sign out
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

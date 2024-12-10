@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-
+import Link from 'next/link';
 import { useHubs, useCreateHub, useUpdateHub, useDeleteHub } from '../../hooks/useHubs';
 import { useSites } from '../../hooks/useSites';
 import Modal from '../Modal';
@@ -26,6 +26,18 @@ export default function Hubs() {
   if (hubsError) return <ErrorAlert message="Failed to load hubs" />;
 
   const columns = [
+    {
+      key: 'title',
+      header: 'Title',
+      render: (value: any, hub: any) => (
+        <Link
+          href={`/hub/${hub.id}`}
+          className="text-green-600 hover:text-green-900"
+        >
+          {value.en}
+        </Link>
+      ),
+    },
     { key: 'title', header: 'Title', render: (value: any) => value.en },
     { key: 'email', header: 'Email' },
     { key: 'city', header: 'City' },

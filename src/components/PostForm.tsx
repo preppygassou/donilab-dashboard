@@ -38,8 +38,10 @@ export default function PostForm({ initialData, categories = [], tags = [],siteI
     fr: initialData?.excerpt?.fr || '' 
   });
   const [featuredMedia, setFeaturedMedia] = useState({ 
-    en: initialData?.featured_media?.en || '', 
-    fr: initialData?.featured_media?.fr || '' 
+    url:{
+    en: initialData?.featured_media?.url?.en  || '', 
+    fr: initialData?.featured_media?.url?.fr  || '' 
+  }
   });
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     initialData?.categories?.map((c: any) => ({ value: c.id, label: c.name.en })) || []
@@ -126,6 +128,7 @@ export default function PostForm({ initialData, categories = [], tags = [],siteI
       </div>
 
       <ImageUpload
+      siteId={siteId}
         label="Featured Media"
         onChange={setFeaturedMedia}
         preview={initialData?.featured_media}

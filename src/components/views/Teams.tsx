@@ -10,12 +10,14 @@ import EmptyState from '../EmptyState';
 import DataTable from '../DataTable';
 import { useParams } from 'next/navigation';
 import { useHubs } from '@/hooks/useHubs';
+import { useUsers } from '@/hooks/useUsers';
 
 export default function Teams() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingTeam, setEditingTeam] = useState<any>(null);
   const [deletingTeam, setDeletingTeam] = useState<any>(null);
   const { data: hubs, isLoading: hubsLoading } = useHubs();
+  const { data: users, isLoading: usersLoading } = useUsers();
   const params = useParams<{ siteId: string; }>()
 
   const { data: teams, isLoading, error } = useTeams();
@@ -23,7 +25,7 @@ export default function Teams() {
   const updateTeam = useUpdateTeam();
   const deleteTeam = useDeleteTeam();
 
-  if (isLoading||hubsLoading) return <LoadingSpinner />;
+  if (isLoading||hubsLoading||usersLoading) return <LoadingSpinner />;
   if (error) return <ErrorAlert message="Failed to load team members" />;
 
   const columns = [
@@ -85,6 +87,7 @@ export default function Teams() {
         title="Add Team Member"
       >
         <TeamForm
+        users={users}
         siteId={params.siteId}
         hubs={hubs}
           onSubmit={async (data) => {
@@ -101,6 +104,7 @@ export default function Teams() {
         title="Edit Team Member"
       >
         <TeamForm
+        users={users}
         siteId={params.siteId}
         hubs={hubs}
           initialData={editingTeam}

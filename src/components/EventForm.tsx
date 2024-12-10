@@ -37,8 +37,10 @@ export default function EventForm({ initialData,categories=[],hubs=[], siteId,on
     initialData?.categories?.map((c: any) => ({ value: c.id, label: c.name.en })) || []
   );
   const [featuredMedia, setFeaturedMedia] = useState({ 
-    en: initialData?.featured_media?.en || '', 
-    fr: initialData?.featured_media?.fr || '' 
+    url:{
+    en: initialData?.featured_media?.url?.en  || '', 
+    fr: initialData?.featured_media?.url?.fr  || '' 
+  }
   });
   const [url, setUrl] = useState(initialData?.url || '');
 

@@ -11,6 +11,9 @@ import DataTable from '../DataTable';
 import { useHubs } from '@/hooks/useHubs';
 import { usePartners } from '@/hooks/usePartners';
 import { useParams } from 'next/navigation';
+import { useProgramTypes } from '@/hooks/useProgramTypes';
+import { useZones } from '@/hooks/useZones';
+import Link from 'next/link';
 
 export default function Programs() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -19,17 +22,29 @@ export default function Programs() {
   const params = useParams<{ siteId: string; }>()
   const { data: hubs, isLoading: hubsLoading } = useHubs();
   const { data: partners, isLoading: partnersLoading } = usePartners();
+  const { data: zones, isLoading: zonesLoading } = useZones();
+  const { data: programtypes, isLoading: programtypesLoading } = useProgramTypes();
   const { data: programs, isLoading, error } = usePrograms();
   const createProgram = useCreateProgram();
   const updateProgram = useUpdateProgram();
   const deleteProgram = useDeleteProgram();
 
-  if (isLoading||hubsLoading||partnersLoading) return <LoadingSpinner />;
+  if (isLoading||hubsLoading||partnersLoading||programtypesLoading||zonesLoading) return <LoadingSpinner />;
   if (error) return <ErrorAlert message="Failed to load programs" />;
 
   const columns = [
-    { key: 'title', header: 'Title', render: (value: any) => value.en },
-    { key: 'type', header: 'Type' },
+    { key: 'title', header: 'Title', render: (value: any, program: any) => (
+      <Link
+        href={`/site/${params.siteId}/programs/${program.id}`}
+        className="text-green-600 hover:text-green-900"
+      >
+        {value.en}
+      </Link>
+    ),},
+    { key: 'ProgramType',
+      header: 'Type',
+      render: (value: any) => value?.name.en,
+      },
     {
       key: 'logo',
       header: 'Logo',
@@ -81,8 +96,10 @@ export default function Programs() {
         title="Create Program"
       >
         <ProgramForm
+        zones={zones}
          hubs={hubs}
          partners={partners}
+         programtypes={programtypes}
          siteId={params.siteId}
           onSubmit={async (data) => {
             await createProgram.mutateAsync(data);
@@ -98,11 +115,13 @@ export default function Programs() {
         title="Edit Program"
       >
         <ProgramForm
+        zones={zones}
          hubs={hubs}
          partners={partners}
+         programtypes={programtypes}
          siteId={params.siteId}
-          initialData={editingProgram}
-          onSubmit={async (data) => {
+         initialData={editingProgram}
+         onSubmit={async (data) => {
             await updateProgram.mutateAsync({ id: editingProgram.id, ...data });
             setEditingProgram(null);
           }}

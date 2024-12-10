@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import axios from 'axios';
+import { api } from '@/services/api';
+import { useParams } from 'next/navigation';
 
 interface Props {
   label: string;
@@ -8,9 +9,13 @@ interface Props {
   error?: string;
   required?: boolean;
   preview?: {
+  url?: {
     en?: string;
     fr?: string;
   };
+  };
+  siteId?:string
+  hubId?:string
   multilingual?: boolean;
 }
 
@@ -20,11 +25,13 @@ export default function ImageUpload({
   error, 
   required, 
   preview,
-  multilingual = true 
+  multilingual = true ,
+  siteId,
+  hubId
 }: Props) {
   const fileInputRefEn = useRef<HTMLInputElement>(null);
   const fileInputRefFr = useRef<HTMLInputElement>(null);
-  const [previewUrls, setPreviewUrls] = useState(preview || {});
+  const [previewUrls, setPreviewUrls] = useState(preview || { url: {} });
   const [loading, setLoading] = useState<boolean>(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
@@ -33,25 +40,39 @@ export default function ImageUpload({
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
+      if (siteId) {
+        formData.append('siteId', siteId);
+      }
+      if (hubId) {
+        formData.append('hubId', hubId);
+      }
+      formData.append('name', file.name);
+      formData.append('type', file.type);
 
       setLoading(true);
       setUploadError(null);
       try {
-        const response = await axios.post<{ filePath: string }>('https://upload.donilab.ml/upload', formData, {
+        const response = await api.post<{ link: string }>('/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        const url = `https://upload.donilab.ml${response.data.filePath}`;
+        const url = `${response.data.link}`;
         if (multilingual) {
           setPreviewUrls(prev => ({
             ...prev,
-            [lang]: url
+            url: {
+              ...prev.url,
+              [lang]: url
+            }
           }));
-          onChange({ ...previewUrls, [lang]: url });
+          onChange({ ...previewUrls, url: {
+            ...previewUrls.url,
+            [lang]: url
+          } });
         } else {
-          setPreviewUrls(url);
-          onChange(url);
+          setPreviewUrls({url:url});
+          onChange({url:url});
         }
       } catch (error) {
         setUploadError('Error uploading file');
@@ -75,8 +96,8 @@ export default function ImageUpload({
               <label className="block text-sm font-medium text-gray-700 mb-2">English</label>
               <div className="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                 <div className="text-center">
-                  {previewUrls.en ? (
-                    <img src={previewUrls.en} alt="Preview (EN)" className="mx-auto h-32 w-32 object-cover" />
+                  {previewUrls?.url?.en ? (
+                    <img src={previewUrls?.url?.en} alt="Preview (EN)" className="mx-auto h-32 w-32 object-cover" />
                   ) : (
                     <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                   )}
@@ -105,8 +126,8 @@ export default function ImageUpload({
               <label className="block text-sm font-medium text-gray-700 mb-2">French</label>
               <div className="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                 <div className="text-center">
-                  {previewUrls.fr ? (
-                    <img src={previewUrls.fr} alt="Preview (FR)" className="mx-auto h-32 w-32 object-cover" />
+                  {previewUrls?.url?.fr ? (
+                    <img src={previewUrls?.url?.fr} alt="Preview (FR)" className="mx-auto h-32 w-32 object-cover" />
                   ) : (
                     <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                   )}
@@ -136,8 +157,8 @@ export default function ImageUpload({
           <div className="col-span-2">
             <div className="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
               <div className="text-center">
-                {previewUrls ? (
-                  <img src={previewUrls} alt="Preview" className="mx-auto h-32 w-32 object-cover" />
+                {previewUrls.url ? (
+                  <img src={previewUrls.url} alt="Preview" className="mx-auto h-32 w-32 object-cover" />
                 ) : (
                   <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                 )}

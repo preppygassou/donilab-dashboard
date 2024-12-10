@@ -17,8 +17,10 @@ export default function PartnerForm({ initialData, onSubmit, onCancel }: Props) 
   });
  
   const [logo, setLogo] = useState({ 
-    en: initialData?.logo?.en || '', 
-    fr: initialData?.logo?.fr || '' 
+    url:{
+    en: initialData?.logo?.url?.en  || '', 
+    fr: initialData?.logo?.url?.fr  || '' 
+  }
   });
   const [link, setLink] = useState(initialData?.link || '');
 

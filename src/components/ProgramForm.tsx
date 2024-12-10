@@ -13,15 +13,18 @@ interface Props {
   hubs?: any[];
   siteId:string;
   partners?: any[];
+  programtypes?: any[];
+  zones?: any[];
 }
 
-export default function ProgramForm({ initialData, hubs=[],partners=[], siteId,onSubmit, onCancel }: Props) {
+export default function ProgramForm({ initialData, hubs=[],partners=[],zones=[],programtypes=[], siteId,onSubmit, onCancel }: Props) {
   const [title, setTitle] = useState({ 
     en: initialData?.title?.en || '', 
     fr: initialData?.title?.fr || '' 
   });
  
-  const [type, setType] = useState(initialData?.type || '');
+  const [programTypeId, setProgramTypeId] = useState(initialData?.programTypeId || '');
+  const [status, setStatus] = useState(initialData?.status || '');
   const [description, setDescription] = useState({ 
     en: initialData?.description?.en || '', 
     fr: initialData?.description?.fr || '' 
@@ -29,11 +32,17 @@ export default function ProgramForm({ initialData, hubs=[],partners=[], siteId,o
 
   const [hubId, setHubId] = useState(initialData?.hubId || '');
   const [logo, setLogo] = useState({ 
-    en: initialData?.logo?.en || '', 
-    fr: initialData?.logo?.fr || '' 
+    url:{
+    en: initialData?.logo?.url?.en  || '', 
+    fr: initialData?.logo?.url?.fr  || '' 
+  }
   });
+  
   const [selectedPartners, setSelectedPartners] = useState<string[]>(
-    initialData?.parnters?.map((p: any) => ({ value: p.id, label: p.name.en })) || []
+    initialData?.partners?.map((p: any) => ({ value: p.id, label: p.name.en })) || []
+  );
+  const [selectedZones, setSelectedZones] = useState<string[]>(
+    initialData?.zones?.map((z: any) => ({ value: z.id, label: z.name.en })) || []
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -47,11 +56,13 @@ export default function ProgramForm({ initialData, hubs=[],partners=[], siteId,o
         }
       : initialData.slug,
       siteId:initialData?.siteId || siteId ,
-      type,
+      programTypeId,
       description,
       logo,
       hubId,
-      partners: selectedPartners.map((p: any) => p.value)
+      status,
+      partners: selectedPartners.map((p: any) => p.value),
+      zones: selectedZones.map((z: any) => z.value)
     });
   };
 
@@ -73,6 +84,7 @@ export default function ProgramForm({ initialData, hubs=[],partners=[], siteId,o
         }))}
         required
       />
+       
       <div className="grid grid-cols-2 gap-4">
         <TextInput
           label="Title (English)"
@@ -89,12 +101,41 @@ export default function ProgramForm({ initialData, hubs=[],partners=[], siteId,o
       </div>
       <Select
         label="Type"
-        value={type}
-        onChange={setType}
+        value={programTypeId}
+        onChange={setProgramTypeId}
+        options={programtypes.map((type) => ({
+          value: type.id,
+          label: type.name.en,
+        }))}
+        required
+      />
+      <Select
+        label="Select status"
+        value={status}
+        onChange={setStatus}
         options={[
-          { value: 'bydonilab', label: 'By Donilab' },
-          { value: 'inpartner', label: 'In Partner' },
-        ]}
+          {
+            label:'FINISHED',
+            value:'FINISHED'
+          },
+          {
+            label:'IN PROGRESS',
+            value:'IN PROGRESS'
+          },
+          {
+            label:'OPEN',
+            value:'OPEN'
+          },
+          {
+            label:'REOPEN',
+            value:'REOPEN'
+          },
+          {
+            label:'CLOSE',
+            value:'CLOSE'
+          },
+          ]
+        }
         required
       />
       
@@ -121,6 +162,16 @@ export default function ProgramForm({ initialData, hubs=[],partners=[], siteId,o
         options={partners.map((parnter) => ({
           value: parnter.id,
           label: parnter.name.en,
+        }))}
+        multiple
+      />
+     <CustomSelect
+        label="Zones"
+        value={selectedZones}
+        onChange={(value) => setSelectedZones(value)}
+        options={zones.map((zone) => ({
+          value: zone.id,
+          label: zone.name.en,
         }))}
         multiple
       />

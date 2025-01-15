@@ -22,9 +22,11 @@ import axios from 'axios'
 import { useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { api } from '@/services/api'
+import { v4 as uuidv4 } from 'uuid'
 
 export function ActivitiesTab({ program }: { program: Program }) {
   const [newActivity, setNewActivity] = useState({
+    id: '',
     fr: '',
     en: '',
     startDate: '',
@@ -38,12 +40,14 @@ export function ActivitiesTab({ program }: { program: Program }) {
     if (!newActivity.fr || !newActivity.en || !newActivity.startDate || !newActivity.endDate) return
 
     try {
-      const updatedActivities = [...(program.activities || []), newActivity]
-      await api.patch(`/programs/${program.id}`, {
+      const activityWithId = { ...newActivity, id: uuidv4() }
+      const updatedActivities = [...(program.activities || []), activityWithId]
+      await api.put(`/programs/${program.id}`, {
         activities: updatedActivities
       })
       queryClient.invalidateQueries(['program', program.id])
       setNewActivity({
+        id: '',
         fr: '',
         en: '',
         startDate: '',
@@ -66,7 +70,7 @@ export function ActivitiesTab({ program }: { program: Program }) {
   const handleRemoveActivity = async (index: number) => {
     try {
       const updatedActivities = program.activities.filter((_, i) => i !== index)
-      await api.patch(`/programs/${program.id}`, {
+      await api.put(`/programs/${program.id}`, {
         activities: updatedActivities
       })
       queryClient.invalidateQueries(['program', program.id])
@@ -91,7 +95,7 @@ export function ActivitiesTab({ program }: { program: Program }) {
         status: status as 'planned' | 'in_progress' | 'completed' | 'cancelled'
       }
       
-      await api.patch(`/programs/${program.id}`, {
+      await api.put(`/programs/${program.id}`, {
         activities: updatedActivities
       })
       
@@ -196,4 +200,3 @@ export function ActivitiesTab({ program }: { program: Program }) {
             </Card>
           )
         }
-       

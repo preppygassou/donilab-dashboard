@@ -15,12 +15,18 @@ interface Props {
   partners?: any[];
   programtypes?: any[];
   zones?: any[];
+  editions?: any[];
 }
 
-export default function ProgramForm({ initialData, hubs=[],partners=[],zones=[],programtypes=[], siteId,onSubmit, onCancel }: Props) {
+export default function ProgramForm({ initialData, hubs=[],partners=[],zones=[],programtypes=[],editions=[], siteId,onSubmit, onCancel }: Props) {
   const [title, setTitle] = useState({ 
     en: initialData?.title?.en || '', 
     fr: initialData?.title?.fr || '' 
+  });
+ 
+  const [duration, setDuration] = useState({ 
+    en: initialData?.duration?.en || '', 
+    fr: initialData?.duration?.fr || '' 
   });
  
   const [programTypeId, setProgramTypeId] = useState(initialData?.programTypeId || '');
@@ -45,10 +51,15 @@ export default function ProgramForm({ initialData, hubs=[],partners=[],zones=[],
     initialData?.zones?.map((z: any) => ({ value: z.id, label: z.name.en })) || []
   );
 
+  const [selectedEditions, setSelectedEditions] = useState<string[]>(
+    initialData?.editions?.map((z: any) => ({ value: z.id, label: z.name.en })) || []
+  );
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit({
       title,
+      duration,
       slug: !initialData?.slug || initialData?.title?.en !== title.en || initialData?.title?.fr !== title.fr
       ? {
         en: generateSlug(title.en),
@@ -62,7 +73,8 @@ export default function ProgramForm({ initialData, hubs=[],partners=[],zones=[],
       hubId,
       status,
       partners: selectedPartners.map((p: any) => p.value),
-      zones: selectedZones.map((z: any) => z.value)
+      zones: selectedZones.map((z: any) => z.value),
+      editions: selectedEditions.map((z: any) => z.value)
     });
   };
 
@@ -96,6 +108,20 @@ export default function ProgramForm({ initialData, hubs=[],partners=[],zones=[],
           label="Title (French)"
           value={title.fr}
           onChange={(value) => setTitle({ ...title, fr: value })}
+          required
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <TextInput
+          label="Duration (English)"
+          value={duration.en}
+          onChange={(value) => setDuration({ ...duration, en: value })}
+          required
+        />
+        <TextInput
+          label="Duration (French)"
+          value={duration.fr}
+          onChange={(value) => setDuration({ ...duration, fr: value })}
           required
         />
       </div>
@@ -162,6 +188,16 @@ export default function ProgramForm({ initialData, hubs=[],partners=[],zones=[],
         options={partners.map((parnter) => ({
           value: parnter.id,
           label: parnter.name.en,
+        }))}
+        multiple
+      />
+     <CustomSelect
+        label="Editions"
+        value={selectedEditions}
+        onChange={(value) => setSelectedEditions(value)}
+        options={editions.map((edition) => ({
+          value: edition.id,
+          label: edition.name.en,
         }))}
         multiple
       />

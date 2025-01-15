@@ -357,7 +357,7 @@ export function SiteDataForm({ siteId,site }: { siteId: string,site:any }) {
             {contactForm.watch('contact').map((_, index) => (
                 <div key={index} className="space-y-4 p-4 border rounded-lg">
                 <div className="grid grid-cols-2 gap-4">
-                  <FormField
+                 {/*  <FormField
                   control={contactForm.control}
                   name={`contact.${index}.id`}
                   render={({ field }) => (
@@ -369,7 +369,7 @@ export function SiteDataForm({ siteId,site }: { siteId: string,site:any }) {
                     <FormMessage />
                     </FormItem>
                   )}
-                  />
+                  /> */}
                   <FormField
                   control={contactForm.control}
                   name={`contact.${index}.title.fr`}
@@ -534,6 +534,7 @@ export function SiteDataForm({ siteId,site }: { siteId: string,site:any }) {
               onClick={() => {
                 const values = contactForm.getValues('contact')
                 values.push({
+                  id: String(values.length + 1),
                   title: { fr: '', en: '' },
                   image: { url: '' },
                   icon: '',
@@ -613,7 +614,7 @@ export function SiteDataForm({ siteId,site }: { siteId: string,site:any }) {
               variant="outline"
               onClick={() => {
                 const values = contactForm.getValues('social')
-                values.push({ name: '', url: '', icon: '' })
+                values.push({id: String(values.length + 1), name: '', url: '', icon: '' })
                 contactForm.setValue('social', values)
               }}
             >
@@ -1539,6 +1540,7 @@ export function SiteDataForm({ siteId,site }: { siteId: string,site:any }) {
                           onClick={() => {
                           const values = footerForm.getValues(`information.${index}.contact`)
                           values.push({
+                            id: String(values.length + 1),
                             title: { fr: '', en: '' },
                             image: { url: '' },
                             icon: '',

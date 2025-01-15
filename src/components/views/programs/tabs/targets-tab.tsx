@@ -11,13 +11,14 @@ import {
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { useToast } from '@/components/ui/use-toast'
-import axios from 'axios'
 import { useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { api } from '@/services/api'
+import { v4 as uuidv4 } from 'uuid'
 
 export function TargetsTab({ program }: { program: Program }) {
   const [newTarget, setNewTarget] = useState({
+    id: '',
     fr: '',
     en: '',
     value: 0
@@ -29,12 +30,13 @@ export function TargetsTab({ program }: { program: Program }) {
     if (!newTarget.fr || !newTarget.en) return
 
     try {
-      const updatedTargets = [...(program.targets || []), newTarget]
-      await api.patch(`/programs/${program.id}`, {
+      const targetWithId = { ...newTarget, id: uuidv4() }
+      const updatedTargets = [...(program.targets || []), targetWithId]
+      await api.put(`/programs/${program.id}`, {
         targets: updatedTargets
       })
       queryClient.invalidateQueries(['program', program.id])
-      setNewTarget({ fr: '', en: '', value: 0 })
+      setNewTarget({ id: '', fr: '', en: '', value: 0 })
       toast({
         title: 'Success',
         description: 'Target added successfully',
@@ -51,7 +53,7 @@ export function TargetsTab({ program }: { program: Program }) {
   const handleRemoveTarget = async (index: number) => {
     try {
       const updatedTargets = program.targets.filter((_, i) => i !== index)
-      await api.patch(`/programs/${program.id}`, {
+      await api.put(`/programs/${program.id}`, {
         targets: updatedTargets
       })
       queryClient.invalidateQueries(['program', program.id])

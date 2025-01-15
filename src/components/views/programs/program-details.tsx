@@ -15,7 +15,8 @@ import { TargetsTab } from './tabs/targets-tab'
 import { GoalsTab } from './tabs/goals-tab'
 import { ActivitiesTab } from './tabs/activities-tab'
 import { ResultsTab } from './tabs/results-tab'
-import Link from 'next/link'
+import { BeneficiaryTab } from './tabs/beneficiary-tab'
+
 import { EditIcon } from 'lucide-react'
 import { useProgram, useUpdateProgram } from '@/hooks/usePrograms'
 import ProgramForm from '@/components/ProgramForm'
@@ -28,6 +29,8 @@ import { useProgramTypes } from '@/hooks/useProgramTypes'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import Modal from '@/components/Modal'
 import { useParams } from 'next/navigation'
+import { useEditions } from '@/hooks/useEditions'
+import { useCompanies } from '@/hooks/useEntreprise'
 
 interface ProgramDetailsProps {
   programId: string;
@@ -45,11 +48,13 @@ export function ProgramDetails({ programId }: ProgramDetailsProps) {
   const updateProgram = useUpdateProgram();
   const [editingProgram, setEditingProgram] = useState<any>(null);
   const { data: hubs, isLoading: hubsLoading } = useHubs();
+  const { data: editions, isLoading: editionsLoading } = useEditions();
+  const { data: companies, isLoading: companiesLoading } = useCompanies();
   const { data: partners, isLoading: partnersLoading } = usePartners();
   const { data: zones, isLoading: zonesLoading } = useZones();
   const { data: programtypes, isLoading: programtypesLoading } = useProgramTypes();
   const params = useParams<{ siteId: string; }>()
-  if (isLoading||hubsLoading||partnersLoading||programtypesLoading||zonesLoading) return <LoadingSpinner />;
+  if (isLoading||hubsLoading||partnersLoading||programtypesLoading||zonesLoading||editionsLoading||companiesLoading) return <LoadingSpinner />;
   if (error) return <ErrorAlert message="Failed to load programs" />;
 
 
@@ -65,6 +70,7 @@ export function ProgramDetails({ programId }: ProgramDetailsProps) {
         <TabsTrigger value="goals">Goals</TabsTrigger>
         <TabsTrigger value="activities">Activities</TabsTrigger>
         <TabsTrigger value="results">Results</TabsTrigger>
+        <TabsTrigger value="beneficiary">Beneficiary</TabsTrigger>
       </TabsList>
 
       <TabsContent value="overview">
@@ -98,6 +104,7 @@ export function ProgramDetails({ programId }: ProgramDetailsProps) {
       >
         <ProgramForm
          zones={zones}
+         editions={editions}
          hubs={hubs}
          partners={partners}
          programtypes={programtypes}
@@ -138,6 +145,9 @@ export function ProgramDetails({ programId }: ProgramDetailsProps) {
 
       <TabsContent value="results">
         <ResultsTab program={program} />
+      </TabsContent>
+      <TabsContent value="beneficiary">
+        <BeneficiaryTab editions={editions} companies={companies} program={program} />
       </TabsContent>
     </Tabs>
   )

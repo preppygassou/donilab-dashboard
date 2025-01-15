@@ -18,13 +18,14 @@ import {
 } from '@/components/ui/select'
 import { useState } from 'react'
 import { useToast } from '@/components/ui/use-toast'
-import axios from 'axios'
 import { useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { api } from '@/services/api'
+import { v4 as uuidv4 } from 'uuid'
 
 export function GoalsTab({ program }: { program: Program }) {
   const [newGoal, setNewGoal] = useState({
+    id: '',
     fr: '',
     en: '',
     status: 'pending' as const
@@ -36,12 +37,13 @@ export function GoalsTab({ program }: { program: Program }) {
     if (!newGoal.fr || !newGoal.en) return
 
     try {
-      const updatedGoals = [...(program.goals || []), newGoal]
-      await api.patch(`/programs/${program.id}`, {
+      const goalWithId = { ...newGoal, id: uuidv4() }
+      const updatedGoals = [...(program.goals || []), goalWithId]
+      await api.put(`/programs/${program.id}`, {
         goals: updatedGoals
       })
       queryClient.invalidateQueries(['program', program.id])
-      setNewGoal({ fr: '', en: '', status: 'pending' })
+      setNewGoal({ id: '', fr: '', en: '', status: 'pending' })
       toast({
         title: 'Success',
         description: 'Goal added successfully',
@@ -58,7 +60,7 @@ export function GoalsTab({ program }: { program: Program }) {
   const handleRemoveGoal = async (index: number) => {
     try {
       const updatedGoals = program.goals.filter((_, i) => i !== index)
-      await api.patch(`/programs/${program.id}`, {
+      await api.put(`/programs/${program.id}`, {
         goals: updatedGoals
       })
       queryClient.invalidateQueries(['program', program.id])
@@ -83,7 +85,7 @@ export function GoalsTab({ program }: { program: Program }) {
         status: status as 'pending' | 'in_progress' | 'completed'
       }
       
-      await api.patch(`/programs/${program.id}`, {
+      await api.put(`/programs/${program.id}`, {
         goals: updatedGoals
       })
       
@@ -137,7 +139,7 @@ export function GoalsTab({ program }: { program: Program }) {
 
           <div className="space-y-4">
             {program.goals?.map((goal, index) => (
-              <div key={index} className="flex items-center gap-4 p-4 border rounded-lg">
+              <div key={goal.id} className="flex items-center gap-4 p-4 border rounded-lg">
                 <div className="flex-1">
                   <p className="font-medium">FR: {goal.fr}</p>
                   <p className="text-muted-foreground">EN: {goal.en}</p>

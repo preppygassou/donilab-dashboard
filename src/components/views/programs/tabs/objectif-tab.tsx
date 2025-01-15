@@ -11,13 +11,13 @@ import {
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { useToast } from '@/components/ui/use-toast'
-import axios from 'axios'
 import { useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { api } from '@/services/api'
+import { v4 as uuidv4 } from 'uuid'
 
 export function ObjectifTab({ program }: { program: Program }) {
-  const [newObjectif, setNewObjectif] = useState({ fr: '', en: '' })
+  const [newObjectif, setNewObjectif] = useState({ id: '', fr: '', en: '' })
   const [objectifType, setObjectifType] = useState<'global' | 'specifiques'>('global')
   const { toast } = useToast()
   const queryClient = useQueryClient()
@@ -30,16 +30,16 @@ export function ObjectifTab({ program }: { program: Program }) {
         ...program.objectif,
         [objectifType]: [
           ...(program.objectif[objectifType] || []),
-          newObjectif
+          { ...newObjectif, id: uuidv4() }
         ]
       }
       
-      await api.patch(`/programs/${program.id}`, {
+      await api.put(`/programs/${program.id}`, {
         objectif: updatedObjectif
       })
       
       queryClient.invalidateQueries(['program', program.id])
-      setNewObjectif({ fr: '', en: '' })
+      setNewObjectif({ id: '', fr: '', en: '' })
       toast({
         title: 'Success',
         description: 'Objective added successfully',
@@ -60,7 +60,7 @@ export function ObjectifTab({ program }: { program: Program }) {
         [type]: program.objectif[type].filter((_, i) => i !== index)
       }
       
-      await api.patch(`/programs/${program.id}`, {
+      await api.put(`/programs/${program.id}`, {
         objectif: updatedObjectif
       })
       

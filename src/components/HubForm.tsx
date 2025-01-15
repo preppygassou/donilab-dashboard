@@ -36,8 +36,12 @@ export default function HubForm({ initialData, sites = [], onSubmit, onCancel }:
     e.preventDefault();
     const formData = {
       title,
+      slug: { 
+      en: title.en.toLowerCase().replace(/\s+/g, '-'), 
+      fr: title.fr.toLowerCase().replace(/\s+/g, '-') 
+      },
       description,
-      logo: logo ? { url: logo } : {url:""},
+      logo: logo ? { url: logo.toString() } : { url: "" },
       siteId,
       email,
       phone,

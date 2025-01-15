@@ -10,20 +10,21 @@ interface Props {
 }
 
 export default function SiteForm({ initialData, onSubmit, onCancel }: Props) {
-  const [name, setName] = useState({ 
-    en: initialData?.name?.en || '', 
-    fr: initialData?.name?.fr || '' 
+  const [name, setName] = useState({
+    en: initialData?.name?.en || '',
+    fr: initialData?.name?.fr || ''
   });
-  const [description, setDescription] = useState({ 
-    en: initialData?.description?.en || '', 
-    fr: initialData?.description?.fr || '' 
+  const [description, setDescription] = useState({
+    en: initialData?.description?.en || '',
+    fr: initialData?.description?.fr || ''
   });
-  const [slogan, setSlogan] = useState({ 
-    en: initialData?.slogan?.en || '', 
-    fr: initialData?.slogan?.fr || '' 
+  const [slogan, setSlogan] = useState({
+    en: initialData?.slogan?.en || '',
+    fr: initialData?.slogan?.fr || ''
   });
   const [id, setId] = useState(initialData?.id || '');
-  const [logo, setLogo] = useState<File | null>(initialData?.logo?.url ||null);
+  const [logo, setLogo] = useState<File | null>(initialData?.logo?.url || null);
+  const [featured_media, setFeatured_media] = useState<File | null>(initialData?.featured_media?.url || null);
   const [email, setEmail] = useState(initialData?.email || '');
   const [phone, setPhone] = useState(initialData?.phone || '');
   const [address, setAddress] = useState(initialData?.address || '');
@@ -39,6 +40,7 @@ export default function SiteForm({ initialData, onSubmit, onCancel }: Props) {
       description,
       slogan,
       logo: logo ? { url: logo } : null,
+      featured_media: featured_media ? { url: featured_media } : null,
       id,
       zipCode,
       postalCode: zipCode,
@@ -54,13 +56,25 @@ export default function SiteForm({ initialData, onSubmit, onCancel }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-
-<ImageUpload
-        label="Logo"
-        onChange={setLogo}
+      <ImageUpload
+      siteId={id}
+        label="Cover"
+        onChange={setFeatured_media}
         multilingual={false}
-        preview={logo}
+        preview={featured_media}
       />
+
+      <div className="grid grid-cols-2 gap-4">
+        <ImageUpload
+        siteId={id}
+          label="Logo"
+          onChange={setLogo}
+          multilingual={false}
+          preview={logo}
+        />
+
+      </div>
+
 
       <div className="grid grid-cols-2 gap-4">
         <TextInput
@@ -115,7 +129,7 @@ export default function SiteForm({ initialData, onSubmit, onCancel }: Props) {
         />
       </div>
 
-    
+
       <TextInput
         label="Email"
         type="email"
@@ -130,20 +144,20 @@ export default function SiteForm({ initialData, onSubmit, onCancel }: Props) {
         onChange={setPhone}
         required
       />
-<div className="grid grid-cols-2 gap-4">
-      <TextInput
-        label="Address"
-        value={address}
-        onChange={setAddress}
-        required
-      />
-      <TextInput
-        label="zipCode"
-        value={zipCode}
-        onChange={setZipCode}
-        required
-      />
-</div>
+      <div className="grid grid-cols-2 gap-4">
+        <TextInput
+          label="Address"
+          value={address}
+          onChange={setAddress}
+          required
+        />
+        <TextInput
+          label="zipCode"
+          value={zipCode}
+          onChange={setZipCode}
+          required
+        />
+      </div>
       <div className="grid grid-cols-2 gap-4">
         <TextInput
           label="City"

@@ -11,13 +11,14 @@ import {
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { useToast } from '@/components/ui/use-toast'
-import axios from 'axios'
 import { useQueryClient } from '@tanstack/react-query'
 import { TrashIcon } from 'lucide-react'
 import { api } from '@/services/api'
+import { v4 as uuidv4 } from 'uuid'
 
 export function ResultsTab({ program }: { program: Program }) {
   const [newResult, setNewResult] = useState({
+    id: '',
     fr: '',
     en: '',
     indicator: {
@@ -34,12 +35,14 @@ export function ResultsTab({ program }: { program: Program }) {
     if (!newResult.fr || !newResult.en || !newResult.indicator.fr || !newResult.indicator.en) return
 
     try {
-      const updatedResults = [...(program.results || []), newResult]
-      await api.patch(`/programs/${program.id}`, {
+      const resultWithId = { ...newResult, id: uuidv4() }
+      const updatedResults = [...(program.results || []), resultWithId]
+      await api.put(`/programs/${program.id}`, {
         results: updatedResults
       })
       queryClient.invalidateQueries(['program', program.id])
       setNewResult({
+        id: '',
         fr: '',
         en: '',
         indicator: {
@@ -65,7 +68,7 @@ export function ResultsTab({ program }: { program: Program }) {
   const handleRemoveResult = async (index: number) => {
     try {
       const updatedResults = program.results.filter((_, i) => i !== index)
-      await api.patch(`/programs/${program.id}`, {
+      await api.put(`/programs/${program.id}`, {
         results: updatedResults
       })
       queryClient.invalidateQueries(['program', program.id])
@@ -90,7 +93,7 @@ export function ResultsTab({ program }: { program: Program }) {
         [field]: value
       }
       
-      await api.patch(`/programs/${program.id}`, {
+      await api.put(`/programs/${program.id}`, {
         results: updatedResults
       })
       
@@ -165,7 +168,7 @@ export function ResultsTab({ program }: { program: Program }) {
 
           <div className="space-y-4">
             {program.results?.map((result, index) => (
-              <div key={index} className="p-4 border rounded-lg space-y-4">
+              <div key={result.id} className="p-4 border rounded-lg space-y-4">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <div className="mb-2">

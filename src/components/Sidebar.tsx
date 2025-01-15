@@ -14,12 +14,14 @@ import {
   TagIcon,
   UserGroupIcon,
   FolderIcon,
+  RectangleGroupIcon,
   DocumentTextIcon,
   ClipboardDocumentListIcon,
   UserCircleIcon,
   BellIcon,
   KeyIcon,
   Cog6ToothIcon,
+  GlobeAltIcon,
   EnvelopeIcon,
   ListBulletIcon,
 } from '@heroicons/react/24/outline';
@@ -31,7 +33,7 @@ import Header from './layout/header';
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
   { name: 'Users', href: '/users', icon: UsersIcon },
-  { name: 'Sites', href: '/sites', icon: BuildingOfficeIcon },
+  { name: 'Sites', href: '/sites', icon: GlobeAltIcon },
 /*   { name: 'Hubs', href: '/hubs', icon: BuildingOfficeIcon }, */
 /*   { name: 'Posts', href: '/posts', icon: NewspaperIcon },
   { name: 'Events', href: '/events', icon: CalendarIcon }, */
@@ -40,6 +42,7 @@ const navigation = [
   { name: 'Zones', href: '/zones', icon: BuildingOfficeIcon },
   { name: 'Tags', href: '/tags', icon: TagIcon },
   { name: 'Partners', href: '/partners', icon: UserGroupIcon },
+  { name: 'Editions', href: '/editions', icon: ClipboardDocumentListIcon },
   /* { name: 'Partners', href: '/partners', icon: UserGroupIcon },
   { name: 'Programs', href: '/programs', icon: ClipboardDocumentListIcon },
   { name: 'Reports', href: '/reports', icon: DocumentTextIcon },
@@ -47,6 +50,7 @@ const navigation = [
   /* { name: 'Notifications', href: '/notifications', icon: BellIcon }, */
   { name: 'Permissions', href: '/permissions', icon: KeyIcon },
   { name: 'Invitations', href: '/invitations', icon: EnvelopeIcon },
+  
 /*   { name: 'Sidebar Options', href: '/sidebar-options', icon: ListBulletIcon }, */
   /* { name: 'Settings', href: '/settings', icon: Cog6ToothIcon }, */
 ];

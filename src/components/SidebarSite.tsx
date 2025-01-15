@@ -22,7 +22,7 @@ import {
   ListBulletIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { useStore } from '@/contexts/store';
 import { logout } from '@/contexts/auth/actions';
@@ -32,9 +32,8 @@ import Header from './layout/header';
 
 export default function DashboardLayout({children }) {
   const params = useParams<{ siteId: string; }>()
-  
+  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const router = useRouter();
   const user = useCurrentUser();
   const {dispatch}= useStore();
   const onClick = () => {
@@ -53,6 +52,7 @@ export default function DashboardLayout({children }) {
     { name: 'Site Expertise', href: "/site/" + params.siteId + '/expertise', icon: UsersIcon },
     { name: 'Site Impact', href: "/site/" + params.siteId + '/impact', icon: TagIcon },
     { name: 'Site Services', href: "/site/" + params.siteId + '/services', icon: Cog6ToothIcon },
+    { name: 'Companies/Incub', href: "/site/" + params.siteId + '/companies', icon: BuildingOfficeIcon },
   ];
 
   return (
@@ -101,7 +101,7 @@ export default function DashboardLayout({children }) {
                                   href={item.href}
                                   className={`
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
-                                    ${router.pathname === item.href
+                                    ${pathname=== item.href
                                       ? 'bg-gray-50 text-green-600'
                                       : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
                                     }
@@ -110,7 +110,7 @@ export default function DashboardLayout({children }) {
                                   <item.icon
                                     className={`
                                       h-6 w-6 shrink-0
-                                      ${router.pathname === item.href
+                                      ${pathname === item.href
                                         ? 'text-green-600'
                                         : 'text-gray-400 group-hover:text-green-600'
                                       }
@@ -169,7 +169,7 @@ export default function DashboardLayout({children }) {
                           href={item.href}
                           className={`
                             group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
-                            ${router.pathname === item.href
+                            ${pathname === item.href
                               ? 'bg-gray-50 text-green-600'
                               : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
                             }
@@ -178,7 +178,7 @@ export default function DashboardLayout({children }) {
                           <item.icon
                             className={`
                               h-6 w-6 shrink-0
-                              ${router.pathname === item.href
+                              ${pathname === item.href
                                 ? 'text-green-600'
                                 : 'text-gray-400 group-hover:text-green-600'
                               }

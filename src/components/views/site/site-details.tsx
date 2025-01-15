@@ -13,13 +13,16 @@ import Link from 'next/link'
 import { EditIcon } from 'lucide-react'
 import ErrorAlert from '@/components/ErrorAlert'
 import LoadingSpinner from '@/components/LoadingSpinner'
-import { useSite } from '@/hooks/useSites'
+import { useSite, useUpdateSite } from '@/hooks/useSites'
+import { useState } from 'react'
+import Modal from '@/components/Modal'
+import SiteForm from '@/components/SiteForm'
 
 
 export function SiteDetails({ siteId }: { siteId: string }) {
-  
+  const updateSite = useUpdateSite();
   const { data: site, isLoading, error } = useSite(siteId);
-
+const [editingSite, setEditingSite] = useState<any>(null);
   if (isLoading) return <LoadingSpinner />;
   if (error) return <ErrorAlert message="Site not found" />;
 
@@ -62,12 +65,24 @@ export function SiteDetails({ siteId }: { siteId: string }) {
         <span>{new Date(site.createdAt).toLocaleDateString()}</span>
         </div>
         <div className="pt-4">
-        <Link href={`/site/${siteId}/edit`}>
-          <Button className="w-full">
-          <EditIcon className="mr-2 h-4 w-4" />
-          Edit Basic Info
-          </Button>
-        </Link>
+        <Button className="w-full" onClick={()=>{setEditingSite(site)}}>
+                    <EditIcon className="mr-2 h-4 w-4" />
+                    Edit Basic Info
+                  </Button>
+                  <Modal
+                          open={!!editingSite}
+                          onClose={() => setEditingSite(null)}
+                          title="Edit Site"
+                        >
+                          <SiteForm
+                            initialData={editingSite}
+                            onSubmit={async (data) => {
+                              await updateSite.mutateAsync({ id: editingSite.id, ...data });
+                              setEditingSite(null);
+                            }}
+                            onCancel={() => setEditingSite(null)}
+                          />
+                        </Modal>
         </div>
       </CardContent>
       </Card>

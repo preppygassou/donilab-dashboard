@@ -12,8 +12,8 @@ const ProtectedLayout = async({ children }: LayoutProps) => {
   const isLoggedIn = session?.isLoggedIn;
 
   return <ProtectedLayoutComponent isLoggedIn={isLoggedIn}>
-    {/* {children} */}
-   {!isLoggedIn ? <LoadingSpinner/>:children}
+    {children}
+  {/*  {!isLoggedIn ? <LoadingSpinner/>:children} */}
     </ProtectedLayoutComponent>;
 };
 

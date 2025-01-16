@@ -7,7 +7,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 const ProtectedLayoutComponent = ({ children, isLoggedIn }) => {
 
 
-  const router = useRouter();
+/*   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -40,7 +40,7 @@ const ProtectedLayoutComponent = ({ children, isLoggedIn }) => {
     };
 
     handleAuth();
-  }, [router, pathname, search, isLoggedIn]);
+  }, [router, pathname, search, isLoggedIn]); */
   /*  const isApiAuthRoute = pathname.startsWith(apiAuthPrefix);
        const isPublicRoute = publicRoutes.includes(pathname);
        const isAuthRoute = authRoutes.includes(pathname);

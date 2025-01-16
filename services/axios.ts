@@ -5,7 +5,7 @@ export function getAPIClient() {
   const token = nookies.get(null)['donilabauth.token'];
  
   const api = axios.create({
-    baseURL: `/api`
+    baseURL: process.env.REACT_APP_BASE_URL
   })
  
   api.interceptors.request.use(config => {

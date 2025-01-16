@@ -4,9 +4,9 @@ import {  cookies } from "next/headers"
 
 
 import { LoginSchema } from "@/schemas";
-import { apiOnServer } from "@/services/api"
+import { apiOnServer } from "../services/api"
 import  { AxiosError } from "axios";
-import { CatchError } from "@/types/general";
+import { CatchError } from "../types/general";
 
 type SignInRequestData = {
   email: string;

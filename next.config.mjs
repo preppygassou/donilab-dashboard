@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  /* output: '', */
   env: {
     REACT_APP_BASE_URL: process.env.REACT_APP_BASE_URL,
   },
@@ -15,14 +16,14 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  async rewrites() {
+ /*  async rewrites() {
     return [
       {
         source: '/api/:path*',
         destination: process.env.REACT_APP_BASE_URL + '/:path*',
       }
     ]
-  },
+  }, */
 
   images: { 
     /* remotePatterns:['upload.donilab.ml'], */

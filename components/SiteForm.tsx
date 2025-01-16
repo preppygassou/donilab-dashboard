@@ -23,8 +23,8 @@ export default function SiteForm({ initialData, onSubmit, onCancel }: Props) {
     fr: initialData?.slogan?.fr || ''
   });
   const [id, setId] = useState(initialData?.id || '');
-  const [logo, setLogo] = useState<File | null>(initialData?.logo?.url || null);
-  const [featured_media, setFeatured_media] = useState<File | null>(initialData?.featured_media?.url || null);
+  const [logo, setLogo] = useState<File | null>(initialData?.logo || null);
+  const [featured_media, setFeatured_media] = useState<File | null>(initialData?.featured_media || null);
   const [email, setEmail] = useState(initialData?.email || '');
   const [phone, setPhone] = useState(initialData?.phone || '');
   const [address, setAddress] = useState(initialData?.address || '');
@@ -39,8 +39,8 @@ export default function SiteForm({ initialData, onSubmit, onCancel }: Props) {
       name,
       description,
       slogan,
-      logo: logo ? { url: logo } : null,
-      featured_media: featured_media ? { url: featured_media } : null,
+      logo: logo ?  logo /* { url: logo } */ : {url:""},
+      featured_media: featured_media ?featured_media /* { url: featured_media } */ : null,
       id,
       zipCode,
       postalCode: zipCode,

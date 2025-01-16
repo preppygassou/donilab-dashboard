@@ -41,7 +41,7 @@ export default function HubForm({ initialData, sites = [], onSubmit, onCancel }:
       fr: title.fr.toLowerCase().replace(/\s+/g, '-') 
       },
       description,
-      logo: logo ? { url: logo.toString() } : { url: "" },
+      logo: logo ? logo : { url: "" },
       siteId,
       email,
       phone,

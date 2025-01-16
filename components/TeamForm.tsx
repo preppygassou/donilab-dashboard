@@ -14,7 +14,7 @@ interface Props {
 
 export default function TeamForm({ initialData,hubs=[],users=[], siteId, onSubmit, onCancel }: Props) {
   const [name, setName] = useState(initialData?.name || '');
-  const [profile, setProfile] = useState(initialData?.profile.url || '');
+  const [profile, setProfile] = useState(initialData?.profile || '');
   const [poste, setPoste] = useState({
     en: initialData?.poste?.en || '', 
     fr: initialData?.poste?.fr || '' 
@@ -26,7 +26,7 @@ export default function TeamForm({ initialData,hubs=[],users=[], siteId, onSubmi
     const formData = {
       siteId:initialData?.siteId || siteId ,
       name,
-      profile: profile ? { url: profile } : null,
+      profile: profile ?profile :  { url: "" },
       poste,
       userId,
       hubId,
@@ -55,7 +55,7 @@ export default function TeamForm({ initialData,hubs=[],users=[], siteId, onSubmi
       <ImageUpload
         label="Profile Picture"
         onChange={setProfile}
-        preview={initialData?.profile?.url}
+        preview={initialData?.profile}
         multilingual={false}
       />
      

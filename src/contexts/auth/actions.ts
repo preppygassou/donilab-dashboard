@@ -98,74 +98,18 @@ const login = (
       type: "USER_SIGNIN_FAIL",
       payload: errorMessage,
     });
-
+/* 
     if (
       axiosError.response &&
       axiosError.response.data &&
       axiosError.response.data.code === 409
     ) {
       window.location.href = `/auth/verify?email=${email}&action=email&service=verify${callbackUrl?"&callbackUrl="+callbackUrl:""}`;
-    }
+    } */
   }
 };
 
 
-const register = (values: z.infer<typeof RegisterSchema>,
-  callbackUrl?: string | null) => async (dispatch: Dispatch<any>) =>{
-
-  dispatch({ type: "USER_REGISTER_REQUEST" });
-  const validatedFields = RegisterSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return dispatch({
-      type: "USER_SIGNIN_FAIL",
-      payload: "Email ou senha inválidos!" 
-    });
-  }
-
-  try {
-
-    const {data} = await api.post('/user/signup', validatedFields.data);
-
-    if (data) {
-      const { email }: any = data;
-      dispatch({ type: "USER_REGISTER_SUCCESS", payload: data });
-      /* dispatch({ type: "USER_SIGNIN_SUCCESS", payload: data }); */
-
-     /*  nookies.set(null, 'donilabauth.token', token, {
-        maxAge: 60 * 60 * 24 * 7, // 1 week
-        path: '/',
-      });
-      nookies.set(null, 'donilabauth.user', JSON.stringify(user), {
-        maxAge: 60 * 60 * 24 * 7, // 1 week
-        path: '/',
-      });
-     
-      sendMessage("login","success"); */
-     /*  location.href=callbackUrl || DEFAULT_LOGIN_REDIRECT; */
-     
-     window.location.href = `/auth/verify?email=${email}&action=email&service=verify`
-
-    } else {
-      dispatch({
-        type: USER_REGISTER_FAIL,
-        payload: "Campos inválidos!",
-      });
-
-    }
-  } catch (error) {
-    const axiosError = error as CatchError;
-    dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        axiosError.response && axiosError.response.data
-          ? axiosError.response.data.error
-          : axiosError.message,
-    });
-
-  }
-
-};
 
 const updatePassword =  (values: z.infer<typeof ChangePasswordSchema>,
   showDialog:any,addToast:any ) => async (dispatch: Dispatch<any>) =>{
@@ -846,7 +790,7 @@ const claimVerifyAccountEmail = (
 
 
 export {
-  register,
+ 
   login,
   logout,
   forgot,

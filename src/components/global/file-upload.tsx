@@ -3,6 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 import { Button } from '../ui/button'
 import axios from 'axios'
+import { api } from '@/services/api'
 
 type Props = {
   apiEndpoint: 'agencyLogo' | 'avatar' | 'subaccountLogo'
@@ -27,7 +28,7 @@ const FileUpload = ({ onChange, value }: Props) => {
     })
 
     try {
-      const response = await axios.post<{ link: string }>('/upload', formData, {
+      const response = await api.post<{ link: string }>('/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

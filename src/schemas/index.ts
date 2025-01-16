@@ -20,7 +20,7 @@ export const SettingsSchema = z
       return true;
     },
     {
-      message: "New password is required!",
+      message: "Nouveau mot de passe requis!",
       path: ["newPassword"],
     }
   )
@@ -33,14 +33,14 @@ export const SettingsSchema = z
       return true;
     },
     {
-      message: "Pas  sword is required!",
+      message: "Mot de passe requis!",
       path: ["password"],
     }
   );
 
 
 export const NewTerritorySchema = z.object({
-  name: z.string().min(4, { message: 'O nome deve ter pelo menos 4 caracteres' }),
+  name: z.string().min(4, { message: 'Le nom doit comporter au moins 4 caractères' }),
   cnuc: z.string().optional(), // Start as optional
   general_code: z.string().optional(),
   territory_type: z.number(),
@@ -58,7 +58,7 @@ export const NewTerritorySchema = z.object({
   // If territory_type is not 1, cnuc can be optional and doesn't require validation
   return true;
 }, {
-  message: 'O código CNUC deve ter exatamente 10 caracteres',
+  message: 'Le code CNUC doit comporter exactement 10 caractères',
   path: ['cnuc'],
 });
 
@@ -67,30 +67,30 @@ export const NewTerritorySchema = z.object({
 export const NewPasswordSchema = z.object({
   token: z.string(),
   password: z.string()
-    .min(8, "Sua senha deve conter pelo menos 8 caracteres.")
-    .regex(passwordRegex, "Sua senha deve conter combinação de letras maiúsculas e minúsculas, números e símbolos especiais.")
+    .min(8, "Votre mot de passe doit contenir au moins 8 caractères.")
+    .regex(passwordRegex, "Votre mot de passe doit contenir une combinaison de lettres majuscules et minuscules, de chiffres et de symboles spéciaux.")
     .refine(pwd => !(pwd.includes("123456") || pwd.includes("abcdef")), {
-      message: "Não devem ser senhas com sequências comuns como '123456' ou 'abcdef'.",
+      message: "Ne doivent pas être des mots de passe avec des séquences courantes comme '123456' ou 'abcdef'.",
     }),
   confirmPassword: z.string()
-    .min(8, "Sua senha deve conter pelo menos 8 caracteres.")
+    .min(8, "Votre mot de passe doit contenir au moins 8 caractères.")
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Esta senha não é semelhante a inserida campo anterior. ",
+  message: "Ce mot de passe n'est pas similaire à celui saisi dans le champ précédent.",
   path: ["confirmPassword"],
 });
 
 export const ChangePasswordSchema = z.object({
   password: z.string(),
   newPassword: z.string()
-    .min(8, "Sua senha deve conter pelo menos 8 caracteres.")
-    .regex(passwordRegex, "Sua senha deve conter combinação de letras maiúsculas e minúsculas, números e símbolos especiais.")
+    .min(8, "Votre mot de passe doit contenir au moins 8 caractères.")
+    .regex(passwordRegex, "Votre mot de passe doit contenir une combinaison de lettres majuscules et minuscules, de chiffres et de symboles spéciaux.")
     .refine(pwd => !(pwd.includes("123456") || pwd.includes("abcdef")), {
-      message: "Não devem ser senhas com sequências comuns como '123456' ou 'abcdef'.",
+      message: "Ne doivent pas être des mots de passe avec des séquences courantes comme '123456' ou 'abcdef'.",
     }),
   confirmPassword: z.string()
-    .min(8, "Sua senha deve conter pelo menos 8 caracteres.")
+    .min(8, "Votre mot de passe doit contenir au moins 8 caractères.")
 }).refine((data) => data.newPassword === data.confirmPassword, {
-  message: "Esta senha não é semelhante a inserida campo anterior. ",
+  message: "Ce mot de passe n'est pas similaire à celui saisi dans le champ précédent.",
   path: ["confirmPassword"],
 });
 
@@ -126,35 +126,35 @@ export const DeleteFormSchema = z.object({
 
 export const ResetSchema = z.object({
   email: z.string().min(1, {
-    message: "E-mail requerida",
+    message: "E-mail requis",
   }).email({
-    message: "Seu e-mail não foi digitado corretamente.",
+    message: "Votre e-mail n'a pas été saisi correctement.",
   }),
 });
 
 export const LoginSchema = z.object({
   email: z.string().min(1, {
-    message: "E-mail requerida",
+    message: "E-mail requis",
   }).email({
-    message: "Seu e-mail não foi digitado corretamente.",
+    message: "Votre e-mail n'a pas été saisi correctement.",
   }),
   password: z.string().min(1, {
-    message: "Senha requerida",
+    message: "Mot de passe requis",
   }),
 });
 
 const organizationDetailsSchema = z.object({
-  name: z.string().min(1, "Nome organização requerida"),
-  type_id: z.string().min(1, "Nenhum item foi selecionado."),
+  name: z.string().min(1, "Nom de l'organisation requis"),
+  type_id: z.string().min(1, "Aucun élément n'a été sélectionné."),
   acronym: z.string().optional(),
 });
 
 export const RegisterSchema = z.object({
-  name: z.string().min(2,"Seu nome não foi digitado corretamente."),
+  name: z.string().min(2,"Votre nom n'a pas été saisi correctement."),
   email: z.string().min(1, {
-    message: "E-mail requerida",
+    message: "E-mail requis",
   }).email({
-    message: "Seu e-mail não foi digitado corretamente.",
+    message: "Votre e-mail n'a pas été saisi correctement.",
   }),
   phone: z.string()
   .optional().refine((val) => {
@@ -169,30 +169,30 @@ export const RegisterSchema = z.object({
 
     return landlinePattern.test(cleaned) || mobilePattern.test(cleaned);
   }, {
-    message: "Insira um número de telefone válido no formato (XX) XXXXX-XX",
+    message: "Veuillez entrer un numéro de téléphone valide au format (XX) XXXXX-XX",
   }),
   /* .refine((num) => num === undefined || /^\+?[1-9]\d{1,14}$/.test(num), {
-    message: "Seu celular não foi digitado corretamente.",
+    message: "Votre téléphone n'a pas été saisi correctement.",
   }), */
   organization: organizationDetailsSchema.optional()
   .optional(),
   invitationcode: z.string()
   .optional(),
-  politics: z.boolean().refine(val => val === true, "Você deve aceitar os termos"),
+  politics: z.boolean().refine(val => val === true, "Vous devez accepter les termes"),
   claimOtp: z.boolean().optional(),
   organizations: z.array(z.number()).optional(),
   password: z.string()
-    .min(8, "Sua senha deve conter pelo menos 8 caracteres.")
-    .regex(passwordRegex, "Sua senha deve conter combinação de letras maiúsculas e minúsculas, números e símbolos especiais.")
+    .min(8, "Votre mot de passe doit contenir au moins 8 caractères.")
+    .regex(passwordRegex, "Votre mot de passe doit contenir une combinaison de lettres majuscules et minuscules, de chiffres et de symboles spéciaux.")
     .refine(pwd => !(pwd.includes("123456") || pwd.includes("abcdef")), {
-      message: "Não devem ser senhas com sequências comuns como '123456' ou 'abcdef'.",
+      message: "Ne doivent pas être des mots de passe avec des séquences courantes comme '123456' ou 'abcdef'.",
     }),
   confirmPassword: z.string()
-    .min(8, "Sua senha deve conter pelo menos 8 caracteres.")
+    .min(8, "Votre mot de passe doit contenir au moins 8 caractères.")
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Esta senha não é semelhante a inserida no campo anterior.",
+  message: "Ce mot de passe n'est pas similaire à celui saisi dans le champ précédent.",
   path: ["confirmPassword"],
 }).refine(data => data.organization || (data.organizations && data.organizations.length > 0), {
-  message: "Pelo menos uma organização ou seleção de organizações é necessária, Ou clique em 'Outra organização' na parte inferior para criar uma nova, caso não tenha encontrado sua organização na lista",
+  message: "Au moins une organisation ou une sélection d'organisations est nécessaire, ou cliquez sur 'Autre organisation' en bas pour en créer une nouvelle si vous n'avez pas trouvé votre organisation dans la liste",
   path: ["organizations"], // This path is indicative; adjust based on actual validation needs
 });

@@ -23,8 +23,11 @@ const nextConfig = {
       }
     ]
   },
+
   images: { 
-    domains: ['upload.donilab.ml', process.env.REACT_APP_BASE_URL, 'localhost'],
+    /* remotePatterns:['upload.donilab.ml'], */
+    /* domains: ['https://api.donilab.ml'], */
+    unoptimized: true 
   },
 }
  

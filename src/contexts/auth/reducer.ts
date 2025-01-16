@@ -6,18 +6,10 @@ import {
   USER_DELETE_SUCCESS,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
-  USER_DETAILS_RESET,
   USER_DETAILS_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
-  USER_REGISTER_FAIL,
-  USER_REGISTER_REQUEST,
-  USER_REGISTER_SUCCESS,
-  USER_SIGNIN_FAIL,
-  USER_SIGNIN_REQUEST,
-  USER_SIGNIN_SUCCESS,
-  USER_SIGNOUT,
   USER_UPDATE_FAIL,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
@@ -33,28 +25,22 @@ type User = {
   id: string;
   name: string;
   email: string;
+  emailVerified: Date;
+  image: object;
   phone: string;
-  role: {
-    id: string;
-    name: string;
-    key_name:string 
-  };
-  organizations: any;
-  permissions: any;
+  role: string;
+  status: string;
 };
 
 type Profile = {
   id: string;
   name: string;
   email: string;
+  emailVerified: Date;
+  image: object;
   phone: string;
-  role: {
-    id: string;
-    name: string;
-    key_name:string 
-  };
-  organizations: any;
-  permissions: any;
+  role: string;
+  status: string;
 };
 
 export type AuthState = {
@@ -104,12 +90,7 @@ const profileState = {
 
 const authReducer = (state: AuthState, action: { type: any; payload: { profile: any; user: any; error:string }; }) => {
   switch (action.type) {
-    case "USER_REGISTER_REQUEST":
-      return { ...state, loading: true };
-    case "USER_REGISTER_SUCCESS":
-      return { ...state, loading: false,error:'',message:action.payload.message };
-    case "USER_REGISTER_FAIL":
-      return { ...state, loading: false, error: action.payload };
+    
     case "USER_SIGNIN_REQUEST":
       return { ...state, loading: true };
     case "USER_SIGNIN_SUCCESS":

@@ -56,6 +56,7 @@ export default function SiteForm({ initialData, onSubmit, onCancel }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-2 gap-4">
       <ImageUpload
       siteId={id}
         label="Cover"
@@ -64,6 +65,8 @@ export default function SiteForm({ initialData, onSubmit, onCancel }: Props) {
         preview={featured_media}
       />
 
+      </div>
+      
       <div className="grid grid-cols-2 gap-4">
         <ImageUpload
         siteId={id}

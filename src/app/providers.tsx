@@ -5,27 +5,27 @@ import { StoreProvider } from '@/contexts/store'
 import { useRouter } from 'next/navigation'
 
 const Providers = ({
-  children,session
+  children, session
 }: {
   children: React.ReactNode,
-  session:any
+  session: any
 }) => {
 
- 
+
   const router = useRouter();
 
   useEffect(() => {
-    const onStorageChange = (event:StorageEvent) => {
+    const onStorageChange = (event: StorageEvent) => {
       if (event.key === 'logout') {
-     router.refresh();
+        router.refresh();
       }
       if (event.key === 'login') {
-     router.refresh();
+        router.refresh();
       }
     };
 
     window.addEventListener('storage', onStorageChange);
-    
+
     return () => {
       window.removeEventListener('storage', onStorageChange);
     };
@@ -34,9 +34,9 @@ const Providers = ({
 
   return (
 
-        <StoreProvider>
-            {children}
-        </StoreProvider>
+    <StoreProvider>
+      {children}
+    </StoreProvider>
   )
 }
 

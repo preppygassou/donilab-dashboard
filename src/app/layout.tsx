@@ -1,7 +1,5 @@
 import { Montserrat_Alternates } from 'next/font/google'
 import { Metadata } from 'next'
-/* import { auth } from "@/auth";
-import { SessionProvider } from "next-auth/react"; */
 import { cn } from "@/lib/utils"
 import { Toaster } from '@/components/ui/toaster'
 import { Toaster as SonnarToaster } from '@/components/ui/sonner'

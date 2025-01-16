@@ -19,7 +19,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["next-env.d.ts","stripe-extensions.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
